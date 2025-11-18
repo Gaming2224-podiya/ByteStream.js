@@ -1,0 +1,48 @@
+let map = [
+	{
+		type: "string",
+		name: "type",
+		minlength: 1,
+		maxlength: 1,
+		func: function(array){
+			let result = {
+				status: (-1),
+				length: 1
+			};
+
+			switch(array[0])
+			{
+				case 0x6E: // "n"
+					result.value = "n";
+					break;
+				case 0x66: // "f"
+					result.value = "f";
+					break;
+				default:
+					return result;
+			}
+
+			result.status = 1;
+
+			return result;
+		}
+	},
+	{
+		type: "check",
+		minlength: 1,
+		maxlength: 2,
+		func: function(array){
+			let position = (-1);
+
+			if(array[0] == 0x0A)
+				position = 1;
+			if(array[1] == 0x0A)
+				position = 2;
+
+			return {
+				status: (position > 0) ? 1 : (-1),
+				length: position
+			};
+		}
+	}
+];
